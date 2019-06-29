@@ -1,5 +1,5 @@
 {
-  "name": "test",
+  "name": "tic-tac-toe",
   "version": "1.0.0",
   "description": "",
   "main": "main.js",
@@ -10,11 +10,12 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "rollup": "^1.16.2"
-  },
+  "dependencies": {},
   "devDependencies": {
+    "rollup": "^1.16.2",
     "rollup-plugin-babel-minify": "^8.0.0",
-    "rollup-plugin-uglify": "^6.0.2"
+    "rollup-plugin-serve": "^1.0.1",
+    "rollup-plugin-terser": "^5.0.0",
+    "terser": "^4.0.0"
   }
 }

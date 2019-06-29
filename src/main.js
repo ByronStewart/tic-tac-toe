@@ -1,13 +1,15 @@
 import { checkWinner } from "./checkWinner.js";
 import { getBestMove } from "./getBestMove.js";
 
+// state variables
 let boardState = Array(9);
-let playerTurn = true;
+let playerTurn = false;
 let gameState = {
   gameover: false,
   winner: "no winner"
 };
 
+// event listeners
 const squares = document.querySelectorAll(".item");
 squares.forEach((el) => {
   el.addEventListener("click", turn);
@@ -15,43 +17,69 @@ squares.forEach((el) => {
 const resetBtn = document.querySelector("#reset");
 resetBtn.addEventListener("click", reset);
 const computerTurnBtn = document.querySelector("#computer-turn");
+const select = document.querySelector("#select");
+select.addEventListener("change", (e) => {
+  if (e.target.value === "player") {
+    playerTurn = true;
+  } else {
+    playerTurn = false;
+  }
+});
+
+// Computer takes a turn
 computerTurnBtn.addEventListener("click", () => {
   const bestMove = getBestMove(boardState, playerTurn);
   if (bestMove.score < -1) {
-    console.log("it is your turn");
+    alert("it is your turn");
     return;
   }
   const square = document.getElementById(bestMove.square);
   square.innerText = "O";
   boardState[bestMove.square] = "O";
+  gameState = checkWinner(boardState);
+  if (gameState.gameover) {
+    announceWinner();
+  }
   playerTurn = !playerTurn;
 });
 
+// resets the game state
 function reset() {
+  const selected = document.querySelector("#select");
   setup();
   gameState = {
     gameover: false,
     winner: "no winner"
   };
-  playerTurn = true;
+  if (selected.value === "player") {
+    playerTurn = true;
+  } else {
+    playerTurn = false;
+  }
 }
 
+// initialises an empty game state
 function setup() {
   for (let i = 0; i < 9; i++) {
     boardState[i] = " ";
     squares[i].innerText = " ";
   }
 }
+
+// announces a winner to the dom
 function announceWinner() {
-  const div = document.createElement("div");
-  const h1 = document.createElement("h1");
-  h1.innerText = `The winner is... ${gameState.winner}`;
-  div.appendChild(h1);
-  document.body.appendChild(div);
+  const notice = document.querySelector("#notice");
+  if (gameState.winner === "X") {
+    notice.innerText = "X is the winner!";
+  } else if (gameState.winner === "O") {
+    notice.innerText = "O is the winner!";
+  } else {
+    notice.innerText = "It's a draw!";
+  }
 }
 
 function turn(e) {
-  console.log(`innertext: ${e.target.innerText}, id: ${e.target.id}`);
+  /* logic when a player takes a turn */
   if (gameState.gameover) return;
   if (e.target.textContent === " ") {
     if (playerTurn) {
