@@ -60,10 +60,12 @@ function reset() {
 
 // initialises an empty game state
 function setup() {
+  const notice = document.querySelector("#notice");
   for (let i = 0; i < 9; i++) {
     boardState[i] = " ";
     squares[i].innerText = " ";
   }
+  notice.innerText = "";
 }
 
 // announces a winner to the dom
