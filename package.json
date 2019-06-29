@@ -12,5 +12,9 @@
   "license": "ISC",
   "dependencies": {
     "rollup": "^1.16.2"
+  },
+  "devDependencies": {
+    "rollup-plugin-babel-minify": "^8.0.0",
+    "rollup-plugin-uglify": "^6.0.2"
   }
 }
